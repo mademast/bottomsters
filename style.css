@@ -1,0 +1,17 @@
+img {
+    margin: 0;
+    padding: 2 2 2 6;
+}
+
+div {
+    line-height: 0;
+}
+
+img.large {
+    width: 199.5;
+    height: 199.5;
+}
+img.medium {
+    width: 166.25;
+    height: 166.25;
+}

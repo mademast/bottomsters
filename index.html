@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bottomsters</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="script.js"></script>
+</head>
+
+<body onload="draw()">
+    <div id="backend">    
+        <label>lastfm username</label>
+        <input id="username" />
+        <label>length of time</label>
+        <select id="length">
+            <option>7day</option>
+            <option>1month</option>
+            <option>3month</option>
+            <option>6month</option>
+            <option>12month</option>
+            <option>overall</option>
+        </select>
+        <label>style</label>
+        <select id="style">
+            <option>40</option>
+            <option>42</option>
+            <option>100</option>
+            <option>custom</option>
+        </select>
+        <button onclick="submit()">Fetch Albums</button>
+    </div>
+    <div id="frontend">
+    </div>
+    <div id="grid">
+    </div>
+</body>
+
+</html>
