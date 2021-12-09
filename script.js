@@ -19,13 +19,52 @@ async function getAlbums(username, timeframe) {
 }
 
 function set_grid(albums) {
-    let grid = document.getElementById("grid")
-    grid.innerHTML = "";
+    let display = document.getElementById("display");
 
+    let sideLength = Math.min(display.clientWidth, display.clientHeight);
+    let fifth = sideLength / 5;
+
+    let canvas = document.createElement('canvas');
+    canvas.width = sideLength;
+    canvas.height = sideLength;
+    canvas.style.border = "1px solid black";
+
+    // Stick this on the window so we can grab it later
+    window.bottomCanvas = canvas;
+
+    display.appendChild(canvas);
+
+    let ctx = canvas.getContext("2d");
+
+    let i = 0;
     for (let album of albums) {
+        console.log(album.title);
+
+        // Set a new index within the loop so all onload callbacks don't have 25
+        let curri = i;
         let image = document.createElement("img");
         image.src = album.src;
-        console.log(album.title);
-        grid.appendChild(image);
+        image.crossOrigin = "anonymous";
+        image.onload = function () {
+            ctx.drawImage(
+                image,
+                (curri % 5) * fifth,
+                Math.floor(curri / 5) * fifth,
+                fifth,
+                fifth
+            );
+            console.log(album.title + " " + curri);
+        }
+
+        ++i;
     }
+}
+
+function download() {
+    let a = document.createElement('a');
+    a.text = "Download PNG";
+    a.href = window.bottomCanvas.toDataURL('image/png');
+    a.download = "bottomsters.png";
+    a.click();
+    //document.getElementById("controls").appendChild(a);
 }
