@@ -28,7 +28,6 @@ class Bottomsters {
 	async makeLastFmChart(username, timeframe) {
 		let albums = await this.getAlbums(username, timeframe);
 		this.drawCollage(albums);
-		setTimeout(() => { this.drawDisplay() }, 1500);
 	}
 
 	async getAlbums(username, timeframe) {
@@ -65,6 +64,7 @@ class Bottomsters {
 					300
 				);
 				console.log(album.title + " " + curri);
+				btm.drawDisplay();
 			}
 		}
 	}
