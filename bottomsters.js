@@ -5,21 +5,24 @@ class Bottomsters {
 	 * @param {string} displayId - The ID of the DOM element to append the display canvas to
 	 */
 	constructor(displayId) {
-		this.canvas = document.createElement('canvas');
+		this.canvas = document.createElement("canvas");
 
 		// Assumes a 5x5 collage where each image is 300x300
 		this.canvas.width = 300 * 5;
 		this.canvas.height = 300 * 5;
 
-		this.ctx = this.canvas.getContext('2d');
+		this.ctx = this.canvas.getContext("2d");
 
 		this.displayDom = document.getElementById(displayId);
 		this.resizeDisplay();
 		this.displayDom.appendChild(this.canvas);
 
-		window.addEventListener('resize', function () {
-			this.resizeDisplay();
-		}.bind(this));
+		window.addEventListener(
+			"resize",
+			function () {
+				this.resizeDisplay();
+			}.bind(this)
+		);
 	}
 
 	async makeLastFmChart(username, timeframe) {
@@ -54,29 +57,23 @@ class Bottomsters {
 			image.crossOrigin = "anonymous";
 
 			image.onload = function () {
-				btm.ctx.drawImage(
-					image,
-					(curri % 5) * 300,
-					Math.floor(curri / 5) * 300,
-					300,
-					300
-				);
+				btm.ctx.drawImage(image, (curri % 5) * 300, Math.floor(curri / 5) * 300, 300, 300);
 				console.log(album.title + " " + curri);
-			}
+			};
 		}
 	}
 
 	resizeDisplay() {
 		let sidelength = Math.min(this.displayDom.clientWidth, this.displayDom.clientHeight);
-		this.canvas.style.width = sidelength + 'px';
-		this.canvas.style.height = sidelength + 'px';
+		this.canvas.style.width = sidelength + "px";
+		this.canvas.style.height = sidelength + "px";
 	}
 
 	download() {
 		// https://stackoverflow.com/a/43523297
-		let a = document.createElement('a');
+		let a = document.createElement("a");
 		a.text = "Download PNG";
-		a.href = this.canvas.toDataURL('image/png');
+		a.href = this.canvas.toDataURL("image/png");
 		a.download = "bottomsters.png";
 		a.click();
 	}
