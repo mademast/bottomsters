@@ -32,13 +32,17 @@ class Bottomsters {
 	}
 
 	async getAlbums(username, timeframe) {
-		return await fetch(
-			`https://3g5e43is58.execute-api.us-west-2.amazonaws.com/prod/lastfm_import/${username}/${timeframe}`
-		)
-			.then((res) => res.text())
-			.then((text) => {
-				return JSON.parse(text.substring(0, text.length - 1) + "]");
-			});
+		const base_url =
+			"https://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&api_key=0a828de6701971f3766542996b54c24b&format=json";
+		const url = `${base_url}&user=${username}&period=${timeframe}`;
+		const json = await fetch(url).then((res) => res.json());
+		const albums = json.topalbums.album;
+		return albums.map((album) => ({
+			title: album.name,
+			artist: album.artist.name,
+			playcount: album.playcount,
+			src: album.image[0]["#text"].replace("/34s", ""),
+		}));
 	}
 
 	drawCollage(albums) {
