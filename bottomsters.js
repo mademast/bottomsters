@@ -5,23 +5,20 @@ class Bottomsters {
 	 * @param {string} displayId - The ID of the DOM element to append the display canvas to
 	 */
 	constructor(displayId) {
-		this.fullCanvas = document.createElement('canvas');
+		this.canvas = document.createElement('canvas');
 
 		// Assumes a 5x5 collage where each image is 300x300
-		this.fullCanvas.width = 300 * 5;
-		this.fullCanvas.height = 300 * 5;
+		this.canvas.width = 300 * 5;
+		this.canvas.height = 300 * 5;
 
-		this.fullCtx = this.fullCanvas.getContext('2d');
+		this.ctx = this.canvas.getContext('2d');
 
 		this.displayDom = document.getElementById(displayId);
-		this.displayCanvas = document.createElement('canvas');
-		this.displayCtx = this.displayCanvas.getContext('2d');
 		this.resizeDisplay();
-		this.displayDom.appendChild(this.displayCanvas);
+		this.displayDom.appendChild(this.canvas);
 
 		window.addEventListener('resize', function () {
 			this.resizeDisplay();
-			this.drawDisplay();
 		}.bind(this));
 	}
 
@@ -56,7 +53,7 @@ class Bottomsters {
 			image.crossOrigin = "anonymous";
 
 			image.onload = function () {
-				btm.fullCtx.drawImage(
+				btm.ctx.drawImage(
 					image,
 					(curri % 5) * 300,
 					Math.floor(curri / 5) * 300,
@@ -64,26 +61,21 @@ class Bottomsters {
 					300
 				);
 				console.log(album.title + " " + curri);
-				btm.drawDisplay();
 			}
 		}
 	}
 
 	resizeDisplay() {
 		let sidelength = Math.min(this.displayDom.clientWidth, this.displayDom.clientHeight);
-		this.displayCanvas.width = sidelength;
-		this.displayCanvas.height = sidelength;
-	}
-
-	drawDisplay() {
-		this.displayCtx.drawImage(this.fullCanvas, 0, 0, this.displayCanvas.width, this.displayCanvas.height)
+		this.canvas.style.width = sidelength + 'px';
+		this.canvas.style.height = sidelength + 'px';
 	}
 
 	download() {
 		// https://stackoverflow.com/a/43523297
 		let a = document.createElement('a');
 		a.text = "Download PNG";
-		a.href = this.fullCanvas.toDataURL('image/png');
+		a.href = this.canvas.toDataURL('image/png');
 		a.download = "bottomsters.png";
 		a.click();
 	}
