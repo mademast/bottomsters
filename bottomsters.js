@@ -37,11 +37,12 @@ class Bottomsters {
 		const url = `${base_url}&user=${username}&period=${timeframe}`;
 		const json = await fetch(url).then((res) => res.json());
 		const albums = json.topalbums.album;
+
 		return albums.map((album) => ({
 			title: album.name,
 			artist: album.artist.name,
 			playcount: album.playcount,
-			src: album.image[0]["#text"].replace("/34s", ""),
+			src: album.image[3]["#text"],
 		}));
 	}
 
