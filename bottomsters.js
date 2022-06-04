@@ -38,12 +38,14 @@ class Bottomsters {
 		const json = await fetch(url).then((res) => res.json());
 		const albums = json.topalbums.album;
 
-		return albums.map((album) => ({
-			title: album.name,
-			artist: album.artist.name,
-			playcount: album.playcount,
-			src: album.image[3]["#text"],
-		}));
+		return albums
+			.map((album) => ({
+				title: album.name,
+				artist: album.artist.name,
+				playcount: album.playcount,
+				src: album.image[3]["#text"],
+			}))
+			.filter((album) => album.src);
 	}
 
 	drawCollage(albums) {
