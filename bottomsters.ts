@@ -87,8 +87,7 @@ class Bottomsters {
 			return;
 		}
 		let album = this.albums[index];
-		let url = new URL(album.artist + "/" + album.title, "https://www.last.fm/music");
-		window.open(url.href);
+		window.open(`https://www.last.fm/music/${album.artist}/${album.title}`);
 	}
 
 	resizeDisplay() {
