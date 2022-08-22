@@ -22,7 +22,7 @@ class Bottomsters {
 
 		this.displayDom = document.getElementById(displayId)!;
 		this.resizeDisplay();
-		this.displayDom.appendChild(this.canvas);
+		this.displayDom.replaceChildren(this.canvas);
 
 		window.addEventListener(
 			"resize",
