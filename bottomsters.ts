@@ -2,12 +2,16 @@ class Bottomsters {
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
 	displayDom: HTMLElement;
+	width: number;
+	height: number;
 	/**
 	 * Constructs a Bottomsters object. The provided displayId will be filled with a square canvas
 	 * taking up as much room as possible.
 	 * @param {string} displayId - The ID of the DOM element to append the display canvas to
 	 */
 	constructor(displayId: string, width: number, height: number) {
+		this.width = width;
+		this.height = height;
 		this.canvas = document.createElement("canvas");
 
 		// Assumes a 5x5 collage where each image is 300x300
@@ -67,13 +71,7 @@ class Bottomsters {
 			image.crossOrigin = "anonymous";
 
 			image.onload = function () {
-				btm.ctx.drawImage(
-					image,
-					(curri % btm.canvas.width) * 300,
-					Math.floor(curri / btm.canvas.height) * 300,
-					300,
-					300
-				);
+				btm.ctx.drawImage(image, (curri % btm.width) * 300, Math.floor(curri / btm.height) * 300, 300, 300);
 				console.log(album.title + " " + curri);
 			};
 		}
