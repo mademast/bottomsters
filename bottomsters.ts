@@ -16,9 +16,11 @@ class Bottomsters {
 		this.height = height;
 		this.canvas = document.createElement("canvas");
 
-		// Assumes a 5x5 collage where each image is 300x300
+		// Assumes a collage where each image is 300x300
 		this.canvas.width = 300 * width;
 		this.canvas.height = 300 * height;
+
+		this.canvas.onclick = this.handleClick.bind(this);
 
 		this.ctx = this.canvas.getContext("2d")!;
 
@@ -26,7 +28,7 @@ class Bottomsters {
 		this.resizeDisplay();
 		this.displayDom.replaceChildren(this.canvas);
 
-		window.addEventListener("resize", this.resizeDisplay);
+		window.addEventListener("resize", this.resizeDisplay.bind(this));
 	}
 
 	async makeLastFmChart(username: string, timeframe: string) {
