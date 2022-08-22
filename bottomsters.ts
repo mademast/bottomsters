@@ -1,9 +1,11 @@
 class Bottomsters {
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
-	displayDom: HTMLElement;
+	displayDom: HTMLDivElement;
 	width: number;
 	height: number;
+	albums: Album[];
+	scale: number;
 	/**
 	 * Constructs a Bottomsters object. The provided displayId will be filled with a square canvas
 	 * taking up as much room as possible.
@@ -20,28 +22,30 @@ class Bottomsters {
 
 		this.ctx = this.canvas.getContext("2d")!;
 
-		this.displayDom = document.getElementById(displayId)!;
+		this.displayDom = document.getElementById(displayId) as HTMLDivElement;
 		this.resizeDisplay();
 		this.displayDom.replaceChildren(this.canvas);
 
-		window.addEventListener(
-			"resize",
-			function () {
-				this.resizeDisplay();
-			}.bind(this)
-		);
+		window.addEventListener("resize", this.resizeDisplay);
 	}
 
 	async makeLastFmChart(username: string, timeframe: string) {
-		let albums = await this.getAlbums(username, timeframe);
+		this.albums = await this.getAlbums(username, timeframe);
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.drawCollage(albums);
+		this.drawCollage();
 	}
 
 	async getAlbums(username: string, timeframe: string) {
-		const base_url =
-			"https://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&api_key=0a828de6701971f3766542996b54c24b&format=json";
-		const url = `${base_url}&user=${username}&period=${timeframe}`;
+		const url = new URL("https://ws.audioscrobbler.com/2.0/");
+		const params = new URLSearchParams({
+			method: "user.gettopalbums",
+			user: username,
+			period: timeframe,
+			api_key: "0a828de6701971f3766542996b54c24b",
+			format: "json",
+		});
+		url.search = params.toString();
+
 		const json = await fetch(url).then((res) => res.json());
 		const albums: any[] = json.topalbums.album;
 
@@ -55,14 +59,9 @@ class Bottomsters {
 			.filter((album) => album.src);
 	}
 
-	drawCollage(albums: Album[]) {
-		for (let i = 0; i < albums.length; ++i) {
-			let album = albums[i];
-
-			// Copy the index here so the anonymous function for onload doesn't use `i` as it would
-			// have incremented beyond this image.
-			let curri = i;
-			let btm = this;
+	drawCollage() {
+		for (let i = 0; i < this.albums.length; ++i) {
+			let album = this.albums[i];
 
 			let image = document.createElement("img");
 			image.src = album.src;
@@ -70,15 +69,29 @@ class Bottomsters {
 			// https://stackoverflow.com/a/30517793
 			image.crossOrigin = "anonymous";
 
-			image.onload = function () {
-				btm.ctx.drawImage(image, (curri % btm.width) * 300, Math.floor(curri / btm.height) * 300, 300, 300);
-				console.log(album.title + " " + curri);
-			};
+			const x = (i % this.width) * 300;
+			const y = Math.floor(i / this.height) * 300;
+
+			image.onload = () => this.ctx.drawImage(image, x, y, 300, 300);
 		}
+	}
+
+	handleClick(e: MouseEvent) {
+		let x = e.offsetX;
+		let y = e.offsetY;
+		let image_size = 300 * this.scale;
+		let index = Math.floor(y / image_size) * this.width + Math.floor(x / image_size);
+		if (index >= this.albums.length) {
+			return;
+		}
+		let album = this.albums[index];
+		let url = new URL(album.artist + "/" + album.title, "https://www.last.fm/music");
+		window.open(url.href);
 	}
 
 	resizeDisplay() {
 		let sidelength = Math.min(this.displayDom.clientWidth, this.displayDom.clientHeight);
+		this.scale = sidelength / this.width;
 		this.canvas.style.width = sidelength + "px";
 		this.canvas.style.height = sidelength + "px";
 	}
