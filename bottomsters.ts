@@ -78,15 +78,30 @@ class Bottomsters {
 		}
 	}
 
-	handleClick(e: MouseEvent) {
-		let x = e.offsetX;
-		let y = e.offsetY;
-		let image_size = 300 * this.scale;
-		let index = Math.floor(y / image_size) * this.width + Math.floor(x / image_size);
+	selectAlbum(e: MouseEvent) {
+		const x = e.offsetX;
+		const y = e.offsetY;
+		const image_size = 300 * this.scale;
+		const index = Math.floor(y / image_size) * this.width + Math.floor(x / image_size);
 		if (index >= this.albums.length) {
 			return;
 		}
-		let album = this.albums[index];
+		return this.albums[index];
+	}
+
+	handleMouseOver(e: MouseEvent) {
+		const album = this.selectAlbum(e);
+		if (!album) {
+			return;
+		}
+		this.canvas.title = `${album.artist} - ${album.title}`;
+	}
+
+	handleClick(e: MouseEvent) {
+		const album = this.selectAlbum(e);
+		if (!album) {
+			return;
+		}
 		window.open(`https://www.last.fm/music/${album.artist}/${album.title}`);
 	}
 
