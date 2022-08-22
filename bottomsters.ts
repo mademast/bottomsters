@@ -21,6 +21,7 @@ class Bottomsters {
 		this.canvas.height = 300 * height;
 
 		this.canvas.onclick = this.handleClick.bind(this);
+		this.canvas.onmousemove = this.handleMouseOver.bind(this);
 
 		this.ctx = this.canvas.getContext("2d")!;
 
