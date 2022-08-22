@@ -93,7 +93,7 @@ class Bottomsters {
 
 	resizeDisplay() {
 		let sidelength = Math.min(this.displayDom.clientWidth, this.displayDom.clientHeight);
-		this.scale = sidelength / this.width;
+		this.scale = sidelength / (this.width * 300);
 		this.canvas.style.width = sidelength + "px";
 		this.canvas.style.height = sidelength + "px";
 	}
