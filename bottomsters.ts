@@ -67,7 +67,13 @@ class Bottomsters {
 			image.crossOrigin = "anonymous";
 
 			image.onload = function () {
-				btm.ctx.drawImage(image, (curri % 5) * 300, Math.floor(curri / 5) * 300, 300, 300);
+				btm.ctx.drawImage(
+					image,
+					(curri % btm.canvas.width) * 300,
+					Math.floor(curri / btm.canvas.height) * 300,
+					300,
+					300
+				);
 				console.log(album.title + " " + curri);
 			};
 		}
