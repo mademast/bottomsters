@@ -1,41 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>bottomsters</title>
+		<link rel="stylesheet" href="style.css" />
+		<script type="text/javascript" src="bottomsters.js"></script>
+		<script type="text/javascript" src="driver.js" defer></script>
+	</head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bottomsters</title>
-    <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="bottomsters.js"></script>
-    <script type="text/javascript" src="driver.js" defer></script>
-</head>
+	<body>
+		<div id="controls">
+			<label>lastfm username</label>
+			<input type="text" id="username" />
+			<label>length of time</label>
+			<select id="length">
+				<option>7day</option>
+				<option>1month</option>
+				<option>3month</option>
+				<option>6month</option>
+				<option>12month</option>
+				<option>overall</option>
+			</select>
+			<label>style</label>
+			<select id="style">
+				<option>25</option>
+				<option>36</option>
+				<option>49</option>
+			</select>
+			<button onclick="submit()">Fetch Albums</button>
+			<button onclick="download()">Download PNG</button>
+		</div>
 
-<body>
-    <div id="controls">
-        <label>lastfm username</label>
-        <input type="text" id="username" />
-        <label>length of time</label>
-        <select id="length">
-            <option>7day</option>
-            <option>1month</option>
-            <option>3month</option>
-            <option>6month</option>
-            <option>12month</option>
-            <option>overall</option>
-        </select>
-        <label>style</label>
-        <select id="style">
-            <option>40</option>
-            <option>42</option>
-            <option>100</option>
-            <option>custom</option>
-        </select>
-        <button onclick="submit()">Fetch Albums</button>
-        <button onclick="download()">Download PNG</button>
-    </div>
-
-    <div id="display">
-    </div>
-</body>
-
+		<div id="display"></div>
+	</body>
 </html>

@@ -7,12 +7,12 @@ class Bottomsters {
 	 * taking up as much room as possible.
 	 * @param {string} displayId - The ID of the DOM element to append the display canvas to
 	 */
-	constructor(displayId: string) {
+	constructor(displayId: string, width: number, height: number) {
 		this.canvas = document.createElement("canvas");
 
 		// Assumes a 5x5 collage where each image is 300x300
-		this.canvas.width = 300 * 5;
-		this.canvas.height = 300 * 5;
+		this.canvas.width = 300 * width;
+		this.canvas.height = 300 * height;
 
 		this.ctx = this.canvas.getContext("2d")!;
 
