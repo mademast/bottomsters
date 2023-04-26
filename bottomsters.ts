@@ -77,12 +77,15 @@ class Bottomsters {
 			const x = (i % this.width) * 300;
 			const y = Math.floor(i / this.height) * 300;
 
-			image.onload = () => this.ctx.drawImage(image, x, y, 300, 300);
-
-			if (this.text) {
-				this.ctx.font = "12px Arial";
-				this.ctx.fillText(album.artist + " - " + album.title, x, y);
-			}
+			image.onload = () => {
+				this.ctx.drawImage(image, x, y, 300, 300);
+				if (this.text) {
+					this.ctx.font = "24px Arial";
+					this.ctx.fillStyle = "#FFFFFF";
+					this.ctx.shadowBlur = 2;
+					this.ctx.fillText(album.artist + " - " + album.title, x, y);
+				}
+			};
 		}
 	}
 
