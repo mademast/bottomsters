@@ -6,14 +6,16 @@ class Bottomsters {
 	height: number;
 	albums: Album[];
 	scale: number;
+	text: boolean;
 	/**
 	 * Constructs a Bottomsters object. The provided displayId will be filled with a square canvas
 	 * taking up as much room as possible.
 	 * @param {string} displayId - The ID of the DOM element to append the display canvas to
 	 */
-	constructor(displayId: string, width: number, height: number) {
+	constructor(displayId: string, width: number, height: number, text: boolean) {
 		this.width = width;
 		this.height = height;
+		this.text = text;
 		this.canvas = document.createElement("canvas");
 
 		// Assumes a collage where each image is 300x300
@@ -76,6 +78,11 @@ class Bottomsters {
 			const y = Math.floor(i / this.height) * 300;
 
 			image.onload = () => this.ctx.drawImage(image, x, y, 300, 300);
+
+			if (this.text) {
+				this.ctx.font = "12px Arial";
+				this.ctx.fillText(album.artist + " - " + album.title, x, y);
+			}
 		}
 	}
 
