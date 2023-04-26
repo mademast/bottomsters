@@ -83,7 +83,9 @@ class Bottomsters {
 					this.ctx.font = "24px Arial";
 					this.ctx.fillStyle = "#FFFFFF";
 					this.ctx.shadowBlur = 2;
-					this.ctx.fillText(album.artist + " - " + album.title, x, y);
+					this.ctx.shadowColor = "#000000";
+					this.ctx.fillText(album.artist, x, y + 24);
+					this.ctx.fillText(album.title, x, y + 48);
 				}
 			};
 		}
